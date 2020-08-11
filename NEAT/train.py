@@ -33,25 +33,24 @@ def gen(genomes, config):
             pipe_idx += 1
 
         for i, bird in enumerate(env.birds):
-            try:
-                output = nets[i].activate((
-                    bird.rect.y,
-                    env.pipes[pipe_idx].top_rect.bottom - bird.rect.y,
-                    env.pipes[pipe_idx].top_rect.left - bird.rect.x))
-                if output[0] > 0.5:
-                    bird.jump()
+            bird_state = bird.get_state()
+            output = nets[i].activate((
+                bird_state[0],
+                bird_state[1],
+                env.pipes[pipe_idx].top_rect.bottom - bird.rect.y,
+                env.pipes[pipe_idx].top_rect.left - bird.rect.x))
+            if output[0] > 0.5:
+                bird.jump()
 
-                bird.move()
-                ge[i].fitness += 0.1
+            bird.move()
+            ge[i].fitness += 0.1
 
-                if env.check_collide(bird):
-                    ge[i].fitness -= 1
+            if env.check_collide(bird):
+                ge[i].fitness -= 1
 
-                    env.birds.pop(i)
-                    nets.pop(i)
-                    ge.pop(i)
-            except:
-                pass
+                env.birds.pop(i)
+                nets.pop(i)
+                ge.pop(i)
 
         env.draw()
 

@@ -57,7 +57,7 @@ class Pipe:
         self.top_rect    = self.top_rect.move(-PIPE_VEL, 0)
         self.bottom_rect = self.bottom_rect.move(-PIPE_VEL, 0)
 
-        if self.top_rect.left < -PIPE_WIDTH:
+        if self.top_rect.right < 0:
             self.__init__()
 
         return self.top_rect.left == 200
@@ -140,7 +140,11 @@ class FlappyBird:
                 pipe_idx += 1
 
             rewards.append(
-                1 if abs(self.pipes[pipe_idx].top_rect.bottom + PIPE_GAP / 2 - last_y) < abs(self.pipes[pipe_idx].top_rect.bottom + PIPE_GAP / 2 - bird.y) else 0
+                1 if abs(
+                    self.pipes[pipe_idx].top_rect.bottom + PIPE_GAP / 2 - last_y
+                ) < abs(
+                    self.pipes[pipe_idx].top_rect.bottom + PIPE_GAP / 2 - bird.y
+                ) else 0
             )
 
             pipe_state = [

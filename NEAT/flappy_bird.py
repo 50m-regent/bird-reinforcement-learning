@@ -39,6 +39,9 @@ class Bird:
 
         self.rect.top = self.y
 
+    def get_state(self):
+        return [self.y, self.vel]
+
     def draw(self, win):
         pygame.draw.rect(win, COLORS['bird'], self.rect)
 
