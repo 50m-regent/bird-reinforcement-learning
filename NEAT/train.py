@@ -60,7 +60,8 @@ def train():
         neat.DefaultReproduction,
         neat.DefaultSpeciesSet,
         neat.DefaultStagnation,
-        CFG_PATH)
+        CFG_PATH
+    )
 
     p = neat.Population(config)
     p.add_reporter(neat.StdOutReporter(True))
